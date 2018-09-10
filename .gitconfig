@@ -30,7 +30,6 @@
 [commit]
 	gpgSign = true
 [gpg]
-	program = /usr/bin/gpg2
 [branch]
 	autoSetupMerge = false
 [fsck]
