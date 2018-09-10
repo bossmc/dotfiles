@@ -18,7 +18,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'rust-lang/rust.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'plasticboy/vim-markdown'
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sirver/ultisnips'
@@ -28,7 +27,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'lambdatoast/elm.vim'
 Plugin 'autozimu/LanguageClient-neovim'
-Plugin 'roxma/nvim-completion-manager'
+Plugin 'Shougo/deoplete.nvim'
 Plugin 'scrooloose/vim-slumlord'
 Plugin 'aklt/plantuml-syntax'
 
@@ -73,12 +72,6 @@ augroup END
 " vim-markdown
 let g:vim_markdown_folding_disabled=1
 
-" YouCompleteMe
-let g:ycm_confirm_extra_conf=0
-highlight SignColumn guibg=darkgrey
-highlight SignColumn ctermbg=darkgrey
-let g:ycm_rust_src_path = '/home/andy/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/'
-
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<C-j>"
 
@@ -88,13 +81,16 @@ let g:airline_theme='murmur'
 " Slumlord
 let g:slumlord_separate_win=1
 
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+
 " Make sure we use cargo to compile rust code
 autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
 
 " LanguageServer
 set hidden
 let g:LanguageClient_serverCommands = {
-      \  'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \  'rust': ['rustup', 'run', 'stable', 'rls'],
       \}
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
