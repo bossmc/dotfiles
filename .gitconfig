@@ -1,0 +1,36 @@
+[user]
+  email = andrew.caldwell@metaswitch.com
+  name = Andy Caldwell
+	signingkey = AC1D228D
+[alias]
+  graph = log --format=graph --graph
+[push]
+  default = current
+	followTags = true
+[merge]
+  defaultToUpstream = true
+  conflictstyle = diff3
+	ff = only
+[color]
+  ui = true
+[pretty]
+  graph = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+[core]
+  excludesfile = /home/ubuntu/.gitignore_global
+  editor = vim
+[fetch]
+  prune = true
+  recurseSubmodules = true
+[status]
+  submoduleSummary = true
+[diff]
+  submodule = log
+[pull]
+  ff = only
+[commit]
+	gpgSign = true
+[gpg]
+	program = /usr/bin/gpg2
+[branch]
+	autoSetupMerge = false
+[fsck]
