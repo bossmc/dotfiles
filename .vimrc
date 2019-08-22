@@ -1,5 +1,4 @@
 set nocompatible
-filetype off
 set t_Co=256
 set encoding=utf-8
 
@@ -10,32 +9,41 @@ else
 endif
 
 " Vundle all the things!
-let &rtp = &rtp . ',' . s:editor_root . '/bundle/Vundle.vim'
-call vundle#begin(s:editor_root . '/bundle')
+"let &rtp = &rtp . ',' . s:editor_root . '/bundle/Vundle.vim'
+call plug#begin(s:editor_root . '/plugs')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'rust-lang/rust.vim'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'sirver/ultisnips'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'honza/vim-snippets'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'lambdatoast/elm.vim'
-Plugin 'autozimu/LanguageClient-neovim'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'scrooloose/vim-slumlord'
-Plugin 'aklt/plantuml-syntax'
+" Language syntax/assist
+Plug 'rust-lang/rust.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'vim-ruby/vim-ruby'
+Plug 'derekwyatt/vim-scala'
+Plug 'ElmCast/elm-vim'
+Plug 'idris-hackers/idris-vim'
+Plug 'rhysd/vim-llvm'
+Plug 'hashivim/vim-terraform'
+Plug 'rodjek/vim-puppet'
+Plug 'aklt/plantuml-syntax'
+Plug 'cespare/vim-toml'
+Plug 'nathanalderson/yang.vim'
 
-call vundle#end()
-filetype plugin indent on
+" Status bar
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Gutters
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" Completion
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', }
+
+" Tidyup
+Plug 'ntpeters/vim-better-whitespace'
+
+call plug#end()
 
 set bg=dark
-syntax on
 set expandtab
 set tabstop=2
 set shiftwidth=2
@@ -50,23 +58,16 @@ set listchars=tab:>-
 set laststatus=2
 set noshowmode
 set autowrite
+set updatetime=500
 
-au FileType make setlocal noexpandtab
-au FileType mkd\|text setlocal spell spelllang=en_gb
+au FileType make,golang setlocal noexpandtab
+au FileType mkd,text setlocal spell spelllang=en_gb
 au FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Remember location in file
-let &viminfo = "'10,\"100,:20,%,n" . s:editor_root . "/info"
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
-endfunction
-
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
+augroup RestoreCursor
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 " vim-markdown
@@ -78,9 +79,6 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 " AirLine
 let g:airline_theme='murmur'
 
-" Slumlord
-let g:slumlord_separate_win=1
-
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
@@ -91,17 +89,15 @@ autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
 set hidden
 let g:LanguageClient_serverCommands = {
       \  'rust': ['rustup', 'run', 'stable', 'rls'],
+      \  'python': ['pyls'],
       \}
-let g:LanguageClient_autoStart = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
 " Commenting blocks of code.
-autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
-autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-autocmd FileType conf,fstab       let b:comment_leader = '# '
-autocmd FileType tex              let b:comment_leader = '% '
-autocmd FileType mail             let b:comment_leader = '> '
-autocmd FileType vim              let b:comment_leader = '" '
+autocmd FileType c,cpp,java,scala,rust let b:comment_leader = '// '
+autocmd FileType sh,ruby,python        let b:comment_leader = '# '
+autocmd FileType conf,fstab            let b:comment_leader = '# '
+autocmd FileType tex                   let b:comment_leader = '% '
+autocmd FileType mail                  let b:comment_leader = '> '
+autocmd FileType vim                   let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
