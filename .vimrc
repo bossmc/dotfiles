@@ -91,6 +91,7 @@ let g:LanguageClient_serverCommands = {
       \  'rust': ['rustup', 'run', 'stable', 'rls'],
       \  'python': ['pyls'],
       \}
+let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
 
 " Commenting blocks of code.
 autocmd FileType c,cpp,java,scala,rust let b:comment_leader = '// '
