@@ -41,6 +41,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', }
 " Tidyup
 Plug 'ntpeters/vim-better-whitespace'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+
 call plug#end()
 
 set bg=dark
