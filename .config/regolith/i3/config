@@ -202,7 +202,7 @@ new_float pixel 1
 
 # Gaps (i3-gaps)
 gaps inner 5
-gaps outer 0
+gaps outer 5
 
 # Only enable gaps on a workspace when there is at least one container
 #smart_gaps on
