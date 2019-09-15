@@ -41,6 +41,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', }
 " Tidyup
 Plug 'ntpeters/vim-better-whitespace'
 
+" Other???
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 call plug#end()
@@ -94,6 +95,11 @@ let g:LanguageClient_serverCommands = {
       \  'python': ['pyls'],
       \}
 let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
+
+" Markdown Preview
+let g:mkdp_auto_start = 1
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_port = '9000'
 
 " Commenting blocks of code.
 autocmd FileType c,cpp,java,scala,rust let b:comment_leader = '// '
