@@ -8,8 +8,6 @@ else
   let s:editor_root=expand("~/.vim")
 endif
 
-" Vundle all the things!
-"let &rtp = &rtp . ',' . s:editor_root . '/bundle/Vundle.vim'
 call plug#begin(s:editor_root . '/plugs')
 
 " Language syntax/assist
@@ -64,7 +62,7 @@ set autowrite
 set updatetime=500
 
 au FileType make,golang setlocal noexpandtab
-au FileType mkd,text setlocal spell spelllang=en_gb
+au FileType markdown,mkd,text setlocal spell spelllang=en_gb
 au FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Remember location in file
@@ -85,9 +83,6 @@ let g:airline_theme='murmur'
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
-" Make sure we use cargo to compile rust code
-autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
-
 " LanguageServer
 set hidden
 let g:LanguageClient_serverCommands = {
@@ -97,7 +92,6 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
 
 " Markdown Preview
-let g:mkdp_auto_start = 1
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_port = '9000'
 
