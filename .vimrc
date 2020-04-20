@@ -23,6 +23,7 @@ Plug 'rodjek/vim-puppet'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'nathanalderson/yang.vim'
+Plug 'pangloss/vim-javascript'
 
 " Status bar
 Plug 'vim-airline/vim-airline'
