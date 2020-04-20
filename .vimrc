@@ -87,7 +87,7 @@ let g:deoplete#enable_at_startup = 1
 " LanguageServer
 set hidden
 let g:LanguageClient_serverCommands = {
-      \  'rust': ['rustup', 'run', 'stable', 'rls'],
+      \  'rust': ['rust-analyzer'],
       \  'python': ['pyls'],
       \}
 let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
@@ -95,9 +95,6 @@ let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
 " Markdown Preview
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_port = '9000'
-
-" rust-vim
-let g:rustfmt_options = '--edition 2018'
 
 " Commenting blocks of code.
 autocmd FileType c,cpp,java,scala,rust let b:comment_leader = '// '
