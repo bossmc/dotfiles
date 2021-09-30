@@ -8,6 +8,8 @@ else
   let s:editor_root=expand("~/.vim")
 endif
 
+let g:python3_host_prog = expand("~/.virtualenvs/neovim/bin/python")
+
 call plug#begin(s:editor_root . '/plugs')
 
 " Language syntax/assist
@@ -24,6 +26,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'nathanalderson/yang.vim'
 Plug 'pangloss/vim-javascript'
+Plug 'towolf/vim-helm'
 
 " Status bar
 Plug 'vim-airline/vim-airline'
@@ -34,8 +37,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Completion
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+Plug 'neovim/nvim-lspconfig'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', }
+Plug 'Shougo/deoplete-lsp'
 
 " Tidyup
 Plug 'ntpeters/vim-better-whitespace'
@@ -62,7 +66,7 @@ set noshowmode
 set autowrite
 set updatetime=500
 
-au FileType make,golang setlocal noexpandtab
+au FileType make,golang,go setlocal noexpandtab
 au FileType markdown,mkd,text setlocal spell spelllang=en_gb
 au FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
@@ -75,9 +79,6 @@ augroup END
 " vim-markdown
 let g:vim_markdown_folding_disabled=1
 
-" Ultisnips
-let g:UltiSnipsExpandTrigger="<C-j>"
-
 " AirLine
 let g:airline_theme='murmur'
 
@@ -85,23 +86,20 @@ let g:airline_theme='murmur'
 let g:deoplete#enable_at_startup = 1
 
 " LanguageServer
-set hidden
-let g:LanguageClient_serverCommands = {
-      \  'rust': ['rust-analyzer'],
-      \  'python': ['pyls'],
-      \}
-let g:LanguageClient_settingsPath = '~/.config/nvim/lsc.json'
+lua << EOF
+vim.lsp.set_log_level("debug")
+require'lspconfig'.rust_analyzer.setup{
+  settings = {
+    ['rust-analyzer'] = {
+      checkOnSave = {
+        command = "clippy"
+      }
+    }
+  }
+}
+EOF
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " Markdown Preview
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_port = '9000'
-
-" Commenting blocks of code.
-autocmd FileType c,cpp,java,scala,rust let b:comment_leader = '// '
-autocmd FileType sh,ruby,python        let b:comment_leader = '# '
-autocmd FileType conf,fstab            let b:comment_leader = '# '
-autocmd FileType tex                   let b:comment_leader = '% '
-autocmd FileType mail                  let b:comment_leader = '> '
-autocmd FileType vim                   let b:comment_leader = '" '
-noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>

@@ -33,3 +33,5 @@
 [branch]
 	autoSetupMerge = false
 [fsck]
+[init]
+	defaultBranch = main
