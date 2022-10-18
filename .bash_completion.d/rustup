@@ -1,1 +1,4 @@
-eval "$(rustup completions bash)"
+if command -v rustup > /dev/null
+then
+  eval "$(rustup completions bash)"
+fi
