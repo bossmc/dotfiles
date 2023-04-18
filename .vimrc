@@ -24,7 +24,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'rodjek/vim-puppet'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
-Plug 'nathanalderson/yang.vim'
+Plug 'nathanalderson/yang.vim', { 'branch': 'main' }
 Plug 'pangloss/vim-javascript'
 Plug 'towolf/vim-helm'
 
@@ -38,6 +38,7 @@ Plug 'tpope/vim-fugitive'
 
 " Completion
 Plug 'neovim/nvim-lspconfig'
+Plug 'simrat39/rust-tools.nvim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins', }
 Plug 'Shougo/deoplete-lsp'
 
@@ -87,19 +88,11 @@ let g:deoplete#enable_at_startup = 1
 
 " LanguageServer
 lua << EOF
-vim.lsp.set_log_level("debug")
-require'lspconfig'.rust_analyzer.setup{
-  settings = {
-    ['rust-analyzer'] = {
-      checkOnSave = {
-        command = "clippy"
-      }
-    }
-  }
-}
+require('rust-tools').setup({})
 EOF
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 " Markdown Preview
 let g:mkdp_open_to_the_world = 1
 let g:mkdp_port = '9000'
+let g:mkdp_browser = 'wslview'
