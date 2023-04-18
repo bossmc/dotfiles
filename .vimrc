@@ -9,6 +9,9 @@ else
 endif
 
 let g:python3_host_prog = expand("~/.virtualenvs/neovim/bin/python")
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+let g:loaded_node_provider = 0
 
 call plug#begin(s:editor_root . '/plugs')
 
