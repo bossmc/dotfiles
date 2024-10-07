@@ -1,0 +1,32 @@
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld", "-C", "link-arg=-Wl,--no-rosegment", "-C", "link-arg=-Wl,-z,nostart-stop-gc"]
+
+[target.x86_64-unknown-linux-musl]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[target.mips-unknown-linux-musl]
+linker = "/home/andy/src/libc/libc-test/musl-1.1.24/prefix-mips/bin/musl-gcc"
+
+[registries.crates-io]
+protocol = "sparse"
+
+[registries.crates-ms]
+index = "sparse+https://crates.microsoft.com/index/"
+
+[registries.crates-ms-backup]
+index = "sparse+https://pkgs.dev.azure.com/msazuredev/_packaging/crates-ms-backup/Cargo/index/"
+
+[registries.metaswitch]
+index = "https://git.datcon.co.uk/infrastructure.public/crates-registry.git"
+
+[registries.afo]
+index = "sparse+https://pkgs.dev.azure.com/msazuredev/AzureForOperators/_packaging/rust/Cargo/index/"
+
+[source.crates-ms]
+registry = "sparse+https://crates.microsoft.com/index/"
+replace-with = "crates-ms-backup"
+
+[registry]
+global-credential-providers = [ "cargo:token", "msrustup" ]

@@ -1,16 +1,17 @@
 [user]
-  email = andrew.caldwell@metaswitch.com
+  email = andycaldwell@microsoft.com
   name = Andy Caldwell
-	signingkey = AC1D228D
+  signingkey = AC1D228D
 [alias]
   graph = log --format=graph --graph
 [push]
-  default = current
-	followTags = true
+  default = upstream
+  followTags = true
+  autoSetupRemote = true
 [merge]
   defaultToUpstream = true
   conflictstyle = diff3
-	ff = only
+  ff = only
 [color]
   ui = true
 [pretty]
@@ -18,6 +19,7 @@
 [core]
   excludesfile = /home/ubuntu/.gitignore_global
   editor = vim
+	pager = delta
 [fetch]
   prune = true
   recurseSubmodules = true
@@ -28,10 +30,11 @@
 [pull]
   ff = only
 [commit]
-	gpgSign = true
-[gpg]
+  gpgSign = true
 [branch]
-	autoSetupMerge = false
-[fsck]
+  autoSetupMerge = false
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[credential "https://dev.azure.com"]
+  useHttpPath = true
+  helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
